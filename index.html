@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueDrive - Car Rental</title>
+    
+    <!-- Google Fonts: Inter for clean, modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ==================== NAVIGATION BAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <span class="logo-icon">🚙</span>
+                <span class="logo-text">Blue<span>Drive</span></span>
+            </a>
+            
+            <!-- Desktop Menu Links -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#cars">Our Cars</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            
+            <!-- Mobile Hamburger Button -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero" id="home">
+        <!-- Background image with overlay -->
+        <div class="hero-bg">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Drive Your Dreams</h1>
+            <p class="hero-subtitle">Premium cars at affordable prices. Book in seconds and hit the road today.</p>
+            
+            <!-- Quick Search Form -->
+            <div class="search-box">
+                <h3>Find Your Perfect Car</h3>
+                <form class="search-form" id="searchForm">
+                    <div class="form-group">
+                        <label for="searchCategory">Category</label>
+                        <select id="searchCategory">
+                            <option value="all">All Categories</option>
+                            <option value="economy">Economy</option>
+                            <option value="midsize">Mid-size</option>
+                            <option value="luxury">Luxury</option>
+                            <option value="suv">SUV</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="searchPickup">Pickup Date</label>
+                        <input type="date" id="searchPickup" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="searchReturn">Return Date</label>
+                        <input type="date" id="searchReturn" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-large">
+                        Search Cars
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== HOW IT WORKS SECTION ==================== -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Choose a Car</h3>
+                    <p>Browse our wide selection of vehicles and pick the one that suits your needs.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Set Your Dates</h3>
+                    <p>Select your pickup and return dates. We'll calculate the best price instantly.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Book & Drive</h3>
+                    <p>Complete your booking in seconds and pick up your car. It's that simple!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== AVAILABLE CARS SECTION ==================== -->
+    <section class="cars-section" id="cars">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Available Cars</h2>
+                <p class="section-subtitle">Select from our premium fleet of well-maintained vehicles</p>
+            </div>
+            
+            <!-- Active Filters Display -->
+            <div class="active-filters" id="activeFilters"></div>
+            
+            <!-- Cars Grid - Populated dynamically by JavaScript -->
+            <div class="cars-grid" id="carsGrid">
+                <!-- Car cards will be injected here -->
+            </div>
+            
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <p>No cars found for the selected category.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BOOKING MODAL ==================== -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h2>Complete Your Booking</h2>
+                <button class="modal-close" id="closeBookingModal">&times;</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- Selected Car Summary -->
+                <div class="selected-car-info" id="selectedCarInfo">
+                    <!-- Injected dynamically -->
+                </div>
+                
+                <!-- Booking Form -->
+                <form class="booking-form" id="bookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookCategory">Car Category</label>
+                            <select id="bookCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="economy">Economy</option>
+                                <option value="midsize">Mid-size</option>
+                                <option value="luxury">Luxury</option>
+                                <option value="suv">SUV</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bookModel">Car Model</label>
+                            <select id="bookModel" required disabled>
+                                <option value="">Select Model</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookPickup">Pickup Date</label>
+                            <input type="date" id="bookPickup" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bookReturn">Return Date</label>
+                            <input type="date" id="bookReturn" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Calculation Display -->
+                    <div class="price-calculation" id="priceCalculation">
+                        <div class="calc-row">
+                            <span>Daily Rate:</span>
+                            <span id="dailyRateDisplay">$0</span>
+                        </div>
+                        <div class="calc-row">
+                            <span>Duration:</span>
+                            <span id="durationDisplay">0 days</span>
+                        </div>
+                        <div class="calc-row total">
+                            <span>Total Price:</span>
+                            <span id="totalPriceDisplay">$0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customerName">Full Name</label>
+                            <input type="text" id="customerName" placeholder="John Doe" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customerEmail">Email Address</label>
+                            <input type="email" id="customerEmail" placeholder="john@example.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerPhone">Phone Number</label>
+                        <input type="tel" id="customerPhone" placeholder="+1 (555) 123-4567" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block" id="submitBooking">
+                        Confirm Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CONFIRMATION MODAL ==================== -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content modal-small">
+            <div class="confirmation-content">
+                <div class="success-icon">✓</div>
+                <h2>Booking Confirmed!</h2>
+                <p id="confirmationMessage">Your car has been successfully booked.</p>
+                <button class="btn btn-primary" id="closeConfirmation">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Company Info -->
+                <div class="footer-col">
+                    <div class="logo">
+                        <span class="logo-icon">🚙</span>
+                        <span class="logo-text">Blue<span>Drive</span></span>
+                    </div>
+                    <p>Your trusted partner for premium car rentals. We make every journey memorable.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#cars">Our Cars</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="contact-list">
+                        <li>📍 123 Blue Street, New York, NY 10001</li>
+                        <li>📞 +1 (555) 123-4567</li>
+                        <li>✉️ info@bluedrive.com</li>
+                        <li>🕐 Mon-Sat: 8:00 AM - 8:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p> BlueDrive Car Rental. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
